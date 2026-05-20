@@ -1,249 +1,252 @@
-# 🎸 LaCuerda - Plataforma de Acordes y Letras
+# LaMusica - Plataforma de Letras y Acordes 🎸
 
-Una plataforma colaborativa para compartir letras y acordes de canciones, inspirada en lacuerda.net.
+Una plataforma colaborativa estilo **LaCuerda.net** para compartir letras y acordes de canciones en español.
 
 ## ✨ Características
 
-### 🎵 Funcionalidades Principales
-- **Catálogo Colaborativo** - Sube, busca y visualiza letras y acordes
-- **🎚️ Transpositor Automático** - Cambia la tonalidad (+6 a -6 semitonos)
-- **⏸️ AutoScroll** - Desplazamiento automático para tocar sin ver la pantalla
-- **⭐ Sistema de Calificación** - Votación 1-5 estrellas
-- **💬 Comentarios** - Comunidad colaborativa
-- **🔍 Búsqueda Avanzada** - Filtra por título, artista, género, dificultad
-- **📊 Ordenamiento** - Reciente, Tendencia, Popular
+### 🎵 Gestión de Canciones
+- ✅ Subir letras y acordes de canciones
+- ✅ Búsqueda por título, artista o género
+- ✅ Filtrado por dificultad y género
+- ✅ Ordenamiento: reciente, tendencia, popular
+- ✅ Contador de vistas
 
-### 🎨 Diseño
-- Tema oscuro profesional
-- Interfaz 100% responsive
-- Acordes resaltados en color
-- Soporte para imágenes de portada
+### 🎼 Herramientas Musicales
+- ✅ **Transpositor (Transpose)**: Cambiar tonalidad automáticamente
+- ✅ **AutoScroll**: Desplazamiento automático de la pantalla
+- ✅ **Diagramas de acordes**: Visualización de acordes
+- ✅ **Resaltado de acordes**: Acordes destacados en color
 
-## 🚀 Requisitos
+### 👥 Funcionalidades Sociales
+- ✅ Sistema de calificación (1-5 estrellas)
+- ✅ Comentarios en canciones
+- ✅ Reputación de usuarios
+- ✅ Perfil de usuarios
 
+### 📱 Características Técnicas
+- ✅ 100% Responsive (móvil, tablet, desktop)
+- ✅ Diseño moderno con Tailwind CSS
+- ✅ Base de datos SQLite
+- ✅ Sin dependencias externas
+- ✅ Tema oscuro profesional
+
+## 🚀 Instalación
+
+### Requisitos
 - PHP 7.4+
-- SQLite3
+- SQLite3 (incluido en PHP)
 - Navegador moderno
 
-## 📦 Instalación
+### Pasos
 
+1. **Clonar el repositorio**
 ```bash
-# 1. Clonar o descargar el repositorio
 git clone https://github.com/walterfontalvo/music.git
 cd music
+```
 
-# 2. Crear directorio de uploads
+2. **Crear carpeta de datos**
+```bash
+mkdir -p data
+chmod 777 data
+```
+
+3. **Crear carpeta de uploads**
+```bash
 mkdir -p public/uploads
-chmod 755 public/uploads
+chmod 777 public/uploads
+```
 
-# 3. Iniciar servidor PHP
+4. **Iniciar servidor local**
+```bash
 cd public
 php -S localhost:8000
-
-# 4. Acceder en navegador
-# http://localhost:8000
 ```
+
+5. **Acceder a la aplicación**
+Abre tu navegador en: **http://localhost:8000**
 
 ## 📁 Estructura del Proyecto
 
 ```
 music/
 ├── config/
-│   ├── config.php          # Configuración general
-│   └── Database.php        # Clase SQLite PDO
+│   ├── config.php              # Configuración general
+│   └── Database.php            # Conexión SQLite
 ├── src/
-│   ├── SongManager.php     # Gestión de canciones
-│   ├── RatingManager.php   # Sistema de calificaciones
-│   ├── CommentManager.php  # Gestión de comentarios
-│   └── ChordParser.php     # Parser y transpositor de acordes
+│   ├── SongManager.php         # Gestión de canciones
+│   ├── CommentManager.php      # Sistema de comentarios
+│   ├── RatingManager.php       # Sistema de calificaciones
+│   └── UserManager.php         # Gestión de usuarios
 ├── public/
-│   ├── index.php           # Galería principal
-│   ├── song.php            # Detalle de canción + herramientas
-│   ├── upload.php          # Subir nueva canción
-│   ├── rate.php            # AJAX para calificaciones
-│   ├── add-comment.php     # Agregar comentarios
-│   └── uploads/            # Almacén de imágenes
-└── db/
-    └── lacuerda.db         # Base de datos SQLite (creada automáticamente)
+│   ├── index.php               # Galería principal
+│   ├── song.php                # Detalle de canción
+│   ├── upload.php              # Subir canción
+│   └── uploads/                # Almacén de imágenes
+├── data/
+│   └── music.db                # Base de datos SQLite
+└── README.md                   # Este archivo
 ```
 
-## 🛠️ Tecnologías
+## 💾 Base de Datos
+
+### Tablas
+
+**users** - Información de usuarios
+```sql
+id, username, email, password, reputation, created_at
+```
+
+**songs** - Catálogo de canciones
+```sql
+id, title, artist, lyrics, chords, key_original, genre, user_id, 
+views, difficulty, rating, created_at, updated_at
+```
+
+**comments** - Comentarios en canciones
+```sql
+id, song_id, user_id, content, created_at
+```
+
+**ratings** - Calificaciones
+```sql
+id, song_id, user_id, rating, created_at
+```
+
+**chord_diagrams** - Diagramas de acordes
+```sql
+id, chord_name, frets, fingers, svg
+```
+
+## 🎯 Funcionalidades Principales
+
+### 1. Buscar Canciones
+```
+Búsqueda por:
+- Título de canción
+- Nombre del artista
+- Género musical
+- Dificultad
+```
+
+### 2. Subir Canción
+```
+Datos requeridos:
+- Título *
+- Artista *
+- Acordes con formato [C] [G] [D] *
+- Tonalidad (opcional)
+- Género (opcional)
+- Dificultad (opcional)
+- Letras (opcional)
+```
+
+### 3. Transposer (Cambiar Tonalidad)
+```
+Botones de -6 a +6 semitonos
+Automático basado en tonalidad original
+```
+
+### 4. Calificar y Comentar
+```
+Sistema de 5 estrellas
+Comentarios con timestamp
+Asociados al usuario
+```
+
+## 🎨 Tecnologías Utilizadas
 
 - **Backend**: PHP 7.4+
-- **Frontend**: HTML5, Tailwind CSS
-- **Base de Datos**: SQLite3
-- **API**: AJAX/Fetch API
+- **Frontend**: HTML5 + Tailwind CSS
+- **Base de datos**: SQLite
+- **Iconos**: Font Awesome 6
+- **JavaScript**: Vanilla JS
 
-## 📝 Uso
+## 📝 Formato de Acordes
 
-### Subir una Canción
-
-1. Haz clic en "Subir Canción"
-2. Completa los campos:
-   - Título
-   - Artista
-   - Género
-   - Dificultad
-   - Letras y acordes
-   - Imagen (opcional)
-3. Los acordes se resaltan automáticamente
-
-### Formato de Acordes
-
-Escribe los acordes en mayúsculas:
+### Ejemplo 1: Simple
 ```
-C, Cm, C7, Cmaj7, Csus4
-D, Dm, D7, Dm7
-E, Em, E7, Em7
-...
+[C]Esto es una canción
+[G]Con acordes [D]simples
+[Am]Y fácil de seguir
 ```
 
-Ejemplo de letra:
+### Ejemplo 2: Con cambios
 ```
-[C] Verso 1
-This is [Am] a song
-About [G] the night
+[Verse]
+[C]Primera estrofa aquí
+[G]Segunda línea
 
-[C] Chorus
-La la [Dm] la la
-```
-
-### Usar Transpositor
-
-1. Abre cualquier canción
-2. Usa los botones ±  para cambiar la tonalidad
-3. Los acordes se transponen automáticamente
-
-### Usar AutoScroll
-
-1. Abre cualquier canción
-2. Haz clic en "Iniciar AutoScroll"
-3. Ajusta la velocidad con el slider
-4. Haz clic en "Pausar" para detener
-
-## 🎯 Características Técnicas
-
-### Transposición de Acordes
-El sistema detecta todos los acordes válidos y los transpone automáticamente:
-- Soporta tonos naturales, sostenidos y bemoles
-- Preserva el tipo de acorde (mayor, menor, séptima, etc.)
-- Maneja 17 notas base × 4 variaciones = cientos de combinaciones
-
-### Base de Datos
-- **Tablas**: songs, comments, ratings, chord_diagrams
-- **Relaciones**: Foreign keys para integridad referencial
-- **Índices**: Optimizados para búsquedas rápidas
-
-### Seguridad
-- Validación de entrada en todos los formularios
-- Protección contra inyección SQL con prepared statements
-- Limpieza de HTML/XSS con htmlspecialchars()
-- Límites de tamaño de archivos
-
-## 📊 Base de Datos
-
-### Tabla: songs
-```sql
-CREATE TABLE songs (
-    id INTEGER PRIMARY KEY,
-    title TEXT NOT NULL,
-    artist TEXT NOT NULL,
-    genre TEXT NOT NULL,
-    difficulty TEXT NOT NULL,
-    lyrics TEXT NOT NULL,
-    image_path TEXT,
-    rating_count INTEGER,
-    rating_sum INTEGER,
-    views INTEGER,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-)
+[Chorus]
+[Am]Coro [F]con acordes
+[G]Diferentes [C]acordes
 ```
 
-### Tabla: ratings
-```sql
-CREATE TABLE ratings (
-    id INTEGER PRIMARY KEY,
-    song_id INTEGER NOT NULL,
-    ip_address TEXT NOT NULL,
-    rating INTEGER NOT NULL,
-    created_at TIMESTAMP,
-    FOREIGN KEY (song_id) REFERENCES songs(id)
-)
-```
+## 🔧 Configuración
 
-### Tabla: comments
-```sql
-CREATE TABLE comments (
-    id INTEGER PRIMARY KEY,
-    song_id INTEGER NOT NULL,
-    name TEXT NOT NULL,
-    comment TEXT NOT NULL,
-    created_at TIMESTAMP,
-    FOREIGN KEY (song_id) REFERENCES songs(id)
-)
-```
-
-## 🔧 Configuración Personalizada
-
-Edita `config/config.php` para:
+Edita `config/config.php` para personalizar:
 
 ```php
-// Cambiar máximo tamaño de archivo
-define('MAX_FILE_SIZE', 10 * 1024 * 1024); // 10MB
-
-// Cambiar géneros disponibles
-define('GENRES', [
-    'rock' => 'Rock',
-    'pop' => 'Pop',
-    // agregar más...
-]);
-
-// Cambiar items por página
-define('ITEMS_PER_PAGE', 20);
+define('APP_NAME', 'LaMusica');
+define('APP_URL', 'http://localhost:8000');
+define('GENRES', [...]); // Géneros
+define('DIFFICULTY_LEVELS', [...]); // Niveles de dificultad
 ```
 
-## 🐛 Troubleshooting
+## 🌐 Despliegue en Producción
 
-### Error: "Database connection failed"
-- Verificar que `/db/` existe o es escribible
-- Ejecutar: `mkdir -p db && chmod 755 db`
+### Requisitos adicionales
+- Dominio propio
+- Hosting con PHP
+- SSL/TLS
 
-### Las imágenes no se suben
-- Verificar que `/public/uploads/` existe y es escribible
-- Ejecutar: `mkdir -p public/uploads && chmod 755 public/uploads`
+### Pasos
 
-### Error de sesión al comentar/calificar
-- No se usa sesión, usa IP del usuario
-- Los navegadores pueden tener IPs compartidas (proxies)
+1. Subir archivos a servidor
+2. Cambiar `APP_URL` en config.php
+3. Configurar permisos de carpetas
+4. Configurar base de datos
+5. Activar HTTPS
 
-## 📱 Responsive Design
+## 📱 Características Móviles
 
-- ✅ Mobile (< 640px)
-- ✅ Tablet (640px - 1024px)
-- ✅ Desktop (> 1024px)
+- ✅ Interfaz 100% responsive
+- ✅ Optimizada para pantallas pequeñas
+- ✅ AutoScroll para leer mientras tocas
+- ✅ Botones grandes y fáciles de tocar
+- ✅ Tema oscuro para bajo consumo de batería
 
-## 🎓 Conceptos Implementados
+## 🚦 Próximas Características
 
-- OOP con clases separadas por responsabilidad
-- Patrón Singleton para Database
-- Prepared Statements para seguridad
-- RESTful endpoints para AJAX
-- Gestión de archivos
-- Paginación
-- Búsqueda y filtrado
+- 🔄 Autenticación con redes sociales
+- 🎙️ Grabación de versiones
+- 🎸 Diagramas animados de acordes
+- 📊 Estadísticas de usuario
+- 🎵 Integración con Spotify
+- 🌙 Modo karaoke
 
 ## 📄 Licencia
 
-Este proyecto es de código abierto. Siéntete libre de modificarlo y distribuirlo.
+MIT License - Libre para usar y modificar
+
+## 👨‍💻 Autor
+
+**Walter Fontalvo** - [GitHub](https://github.com/walterfontalvo)
+
+## 📞 Soporte
+
+¿Problemas? Abre un issue en el repositorio o contacta al autor.
 
 ## 🤝 Contribuciones
 
-Las contribuciones son bienvenidas. Puedes:
-- Reportar bugs
-- Sugerir nuevas características
-- Hacer pull requests
+¡Las contribuciones son bienvenidas! Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
 ---
 
-**Desarrollado con ❤️ para músicos y guitarristas** 🎸
+⭐ Si te gusta este proyecto, ¡dale una estrella!

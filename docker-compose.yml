@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    image: php:8.1-apache
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - PHP_DATE_TIMEZONE=America/Bogota
+    working_dir: /var/www/html
+    command: >
+      sh -c "a2enmod rewrite &&
+             docker-php-ext-install pdo_sqlite &&
+             apache2-foreground"

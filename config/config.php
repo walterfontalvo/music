@@ -1,50 +1,46 @@
 <?php
-// Configuration
-define('ROOT_PATH', dirname(__DIR__));
-define('PUBLIC_PATH', ROOT_PATH . '/public');
-define('UPLOADS_PATH', PUBLIC_PATH . '/uploads');
-define('DB_PATH', ROOT_PATH . '/db/lacuerda.db');
 
-// Create directories if they don't exist
-if (!is_dir(UPLOADS_PATH)) {
-    mkdir(UPLOADS_PATH, 0755, true);
-}
-if (!is_dir(dirname(DB_PATH))) {
-    mkdir(dirname(DB_PATH), 0755, true);
-}
+// Configuración de la aplicación
+define('APP_NAME', 'LaMusica - Letras y Acordes');
+define('APP_URL', 'http://localhost:8000');
+define('UPLOAD_DIR', __DIR__ . '/../uploads/');
+define('MAX_FILE_SIZE', 5242880); // 5MB
+define('ALLOWED_EXTENSIONS', ['jpg', 'jpeg', 'png', 'gif', 'webp']);
 
-// Database
-define('DB_HOST', 'sqlite:' . DB_PATH);
-
-// Upload settings
-define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
-define('ALLOWED_TYPES', ['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
-define('ALLOWED_EXT', ['jpg', 'jpeg', 'png', 'gif', 'webp']);
-
-// Pagination
-define('ITEMS_PER_PAGE', 12);
-
-// Genres
+// Generos musicales
 define('GENRES', [
     'rock' => 'Rock',
     'pop' => 'Pop',
     'reggaeton' => 'Reggaeton',
-    'latin' => 'Latina',
-    'folk' => 'Folklórico',
-    'metal' => 'Metal',
-    'jazz' => 'Jazz',
+    'latin' => 'Latino',
+    'folk' => 'Folk',
     'blues' => 'Blues',
+    'jazz' => 'Jazz',
     'country' => 'Country',
-    'otros' => 'Otros'
+    'metal' => 'Metal',
+    'indie' => 'Indie'
 ]);
 
-// Difficulty levels
+// Dificultad
 define('DIFFICULTY_LEVELS', [
-    'principiante' => 'Principiante',
-    'intermedio' => 'Intermedio',
-    'avanzado' => 'Avanzado'
+    'easy' => 'Fácil',
+    'medium' => 'Medio',
+    'hard' => 'Difícil',
+    'expert' => 'Experto'
 ]);
 
-// Error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Acordes comunes
+define('COMMON_CHORDS', [
+    'C', 'Cm', 'C7', 'Cmaj7', 'Cmin7',
+    'D', 'Dm', 'D7', 'Dmaj7', 'Dmin7',
+    'E', 'Em', 'E7', 'Emaj7', 'Emin7',
+    'F', 'Fm', 'F7', 'Fmaj7', 'Fmin7',
+    'G', 'Gm', 'G7', 'Gmaj7', 'Gmin7',
+    'A', 'Am', 'A7', 'Amaj7', 'Amin7',
+    'B', 'Bm', 'B7', 'Bmaj7', 'Bmin7',
+    'F#', 'F#m', 'Bb', 'Bbm', 'Eb', 'Ebm'
+]);
+
+require_once __DIR__ . '/Database.php';
+$db = new Database();
+$pdo = $db->getConnection();
